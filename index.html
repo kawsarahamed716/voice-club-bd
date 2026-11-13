@@ -3,168 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voice Club BD - হোমসীন ও রুম লিস্ট</title>
+    <title>Imo Voice Club - Pro Full Screen UI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap');
         body {
             font-family: 'Hind Siliguri', sans-serif;
-            background-color: #0b0f19;
+            background-color: #000000;
             color: #ffffff;
+        }
+        /* Imo Style Staggered Mic Grid Layout */
+        .mic-grid-container {
+            position: relative;
+            width: 100%;
+            height: 380px;
+        }
+        .mic-slot {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transform: translate(-50%, -50%);
         }
     </style>
 </head>
-<body class="flex flex-col h-screen max-w-md mx-auto bg-slate-900 shadow-2xl overflow-hidden border-x border-slate-800">
+<body class="flex flex-col h-screen max-w-md mx-auto bg-slate-950 shadow-2xl overflow-hidden border-x border-slate-800 relative">
 
-    <!-- Header / Top Bar -->
-    <header class="bg-slate-800/90 backdrop-blur border-b border-slate-700/80 px-4 py-3 flex items-center justify-between">
-        <div class="flex items-center space-x-2">
-            <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-purple-600 to-pink-600 flex items-center justify-center font-bold text-white shadow">
-                VC
+    <!-- Background Image with Overlay -->
+    <div class="absolute inset-0 z-0">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600" class="w-full h-full object-cover opacity-40 filter blur-[1px]" alt="Background">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/90"></div>
+    </div>
+
+    <!-- Top Announcement Banner -->
+    <div class="relative z-10 bg-emerald-600/90 text-white text-[11px] px-3 py-1 font-medium text-center truncate shadow">
+        ✅ লাইভ পেমেন্ট: Owner আজ ৮৩,৫০ টাকা ক্যাশআউট করেছেন!
+    </div>
+
+    <!-- Header Section -->
+    <header class="relative z-10 px-3 py-2 flex items-center justify-between">
+        <div class="flex items-center space-x-2 bg-black/40 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 max-w-[55%]">
+            <div class="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center text-slate-950 font-bold shrink-0 shadow">
+                <i class="fa-solid fa-crown text-xs"></i>
             </div>
-            <div>
-                <h1 class="font-bold text-sm leading-tight text-white">ভয়েস ক্লাব বিডি 🇧🇩</h1>
-                <p class="text-[10px] text-emerald-400 font-medium">● অনলাইন: ৪,৮৫০ জন</p>
+            <div class="overflow-hidden">
+                <h1 class="font-bold text-xs leading-tight text-white truncate">টাকাইলেই 🎸 গানে...</h1>
+                <p class="text-[9px] text-slate-300 truncate">Members: 3.2K • রোল: OWNER</p>
             </div>
         </div>
-        <div class="flex items-center space-x-2">
-            <button class="bg-gradient-to-r from-amber-500 to-yellow-600 text-slate-950 px-3 py-1.5 rounded-full text-xs font-bold shadow flex items-center gap-1">
-                <i class="fa-solid fa-crown"></i> VIP
-            </button>
-            <button class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow">
-                + রুম খুলুন
-            </button>
+
+        <!-- Diamonds & Balance -->
+        <div class="flex items-center space-x-1.5">
+            <div class="bg-black/50 backdrop-blur border border-white/10 px-2 py-1 rounded-full flex items-center space-x-1 text-[11px]">
+                <i class="fa-solid fa-gem text-cyan-400 text-xs"></i>
+                <span class="font-bold">50</span>
+            </div>
+            <div class="bg-black/50 backdrop-blur border border-white/10 px-2 py-1 rounded-full flex items-center space-x-1 text-[11px]">
+                <span class="text-amber-400 font-bold">৳</span>
+                <span class="font-bold">100</span>
+            </div>
         </div>
     </header>
 
-    <!-- Main Content Area (Home & Rooms List) -->
-    <main class="flex-1 overflow-y-auto p-4 space-y-4">
-        
-        <!-- VIP Banner Section -->
-        <div class="bg-gradient-to-r from-amber-500/20 via-purple-600/30 to-pink-600/30 border border-amber-500/40 rounded-2xl p-4 shadow-lg relative overflow-hidden">
-            <div class="absolute right-2 -bottom-2 opacity-20 text-5xl text-amber-400">
-                <i class="fa-solid fa-crown"></i>
-            </div>
-            <span class="bg-amber-500 text-slate-950 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase">বিশেষ ঘোষণা</span>
-            <h2 class="font-bold text-base text-amber-300 mt-1">👑 ভিআইপি (VIP) মেম্বারশিপ অফার!</h2>
-            <p class="text-xs text-slate-300 mt-0.5">এক্সক্লুসিভ ফ্রেম, স্পেশাল এন্ট্রি এফেক্ট এবং আনলিমিটেড মাইক এক্সেস পান।</p>
-            <button class="mt-3 bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold px-4 py-1.5 rounded-xl shadow transition">
-                ভিআইপি হোন
-            </button>
-        </div>
+    <!-- Room Rank & Tags -->
+    <div class="relative z-10 px-4 py-1 flex items-center space-x-2">
+        <span class="bg-amber-500/80 text-slate-950 text-[10px] px-2 py-0.5 rounded-md font-bold flex items-center gap-1 shadow">
+            <i class="fa-solid fa-trophy"></i> Hourly Rank 6
+        </span>
+        <span class="bg-amber-500 text-slate-950 text-[10px] px-2 py-0.5 rounded-full font-bold">Owner</span>
+        <span class="bg-sky-500 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">Admin</span>
+        <span class="bg-slate-700 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">Member</span>
+    </div>
 
-        <!-- Categories / Tabs -->
-        <div class="flex space-x-2 overflow-x-auto pb-1 text-xs">
-            <button class="bg-purple-600 text-white px-4 py-1.5 rounded-full font-semibold whitespace-nowrap shadow">সকল রুম</button>
-            <button class="bg-slate-800 text-slate-300 px-4 py-1.5 rounded-full font-semibold whitespace-nowrap border border-slate-700">জনপ্রিয় ⭐</button>
-            <button class="bg-slate-800 text-slate-300 px-4 py-1.5 rounded-full font-semibold whitespace-nowrap border border-slate-700">সঙ্গীত 🎶</button>
-            <button class="bg-slate-800 text-slate-300 px-4 py-1.5 rounded-full font-semibold whitespace-nowrap border border-slate-700">আড্ডা ☕</button>
-            <button class="bg-slate-800 text-slate-300 px-4 py-1.5 rounded-full font-semibold whitespace-nowrap border border-slate-700">কবিতা 📖</button>
-        </div>
-
-        <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider pt-1">লাইভ আড্ডা রুমসমূহ</h3>
-
-        <!-- Room Card 1 -->
-        <div class="bg-slate-800/80 border border-slate-700/60 rounded-2xl p-4 hover:border-purple-500/50 transition shadow-lg space-y-3">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-2">
-                    <span class="bg-red-500/20 text-red-400 border border-red-500/30 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase animate-pulse">
-                        <i class="fa-solid fa-circle text-[8px] mr-1"></i> লাইভ
-                    </span>
-                    <span class="text-xs text-slate-400"><i class="fa-solid fa-users mr-1"></i> ১৪/১৬ জন</span>
+    <!-- Main Mic Stage Area (Imo Staggered Layout) -->
+    <main class="relative z-10 flex-1 overflow-hidden px-2">
+        <div class="mic-grid-container">
+            
+            <!-- Mic 1 (Owner / Crown) -->
+            <div class="mic-slot" style="top: 18%; left: 15%;">
+                <div class="relative w-12 h-12 rounded-full bg-slate-800 border-2 border-amber-400 flex items-center justify-center shadow-lg">
+                    <i class="fa-solid fa-crown text-amber-400 text-xs absolute -top-2 z-20"></i>
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" class="w-full h-full rounded-full object-cover" alt="Mic">
+                    <span class="absolute -bottom-1 bg-amber-500 text-slate-950 text-[8px] px-1 rounded font-bold">আপনি (Own...</span>
                 </div>
-                <span class="text-xs bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded-md font-medium">সঙ্গীত রুম</span>
             </div>
-            <div>
-                <h4 class="font-bold text-sm text-white">🎵 রাতের মিষ্টি গান ও খোশগল্প ☕</h4>
-                <p class="text-[11px] text-slate-400 mt-0.5">হোস্ট: তানভীর আহমেদ • সবাই আসুন আড্ডায়!</p>
-            </div>
-            <div class="flex items-center justify-between pt-2 border-t border-slate-700/50">
-                <div class="flex -space-x-2 overflow-hidden">
-                    <img class="inline-block h-6 w-6 rounded-full ring-2 ring-slate-800 object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" alt="">
-                    <img class="inline-block h-6 w-6 rounded-full ring-2 ring-slate-800 object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100" alt="">
-                    <img class="inline-block h-6 w-6 rounded-full ring-2 ring-slate-800 object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100" alt="">
-                </div>
-                <button class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-3.5 py-1.5 rounded-xl shadow transition flex items-center gap-1">
-                    প্রবেশ করুন <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                </button>
-            </div>
-        </div>
 
-        <!-- Room Card 2 -->
-        <div class="bg-slate-800/80 border border-slate-700/60 rounded-2xl p-4 hover:border-purple-500/50 transition shadow-lg space-y-3">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-2">
-                    <span class="bg-red-500/20 text-red-400 border border-red-500/30 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase animate-pulse">
-                        <i class="fa-solid fa-circle text-[8px] mr-1"></i> লাইভ
-                    </span>
-                    <span class="text-xs text-slate-400"><i class="fa-solid fa-users mr-1"></i> ১০/১৬ জন</span>
+            <!-- Mic 2 (Locked) -->
+            <div class="mic-slot" style="top: 18%; left: 38%;">
+                <div class="relative w-12 h-12 rounded-full bg-slate-800/80 border-2 border-slate-600 flex items-center justify-center shadow-lg">
+                    <i class="fa-solid fa-lock text-amber-400 text-xs"></i>
+                    <span class="absolute -bottom-1 bg-slate-700 text-slate-300 text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">2</span>
                 </div>
-                <span class="text-xs bg-pink-500/20 text-pink-300 px-2 py-0.5 rounded-md font-medium">কবিতা আসর</span>
             </div>
-            <div>
-                <h4 class="font-bold text-sm text-white">📖 কবিতার আসর ও পদ্য পাঠ</h4>
-                <p class="text-[11px] text-slate-400 mt-0.5">হোস্ট: নুসরাত জাহান • আপনার লেখা কবিতা শোনান।</p>
-            </div>
-            <div class="flex items-center justify-between pt-2 border-t border-slate-700/50">
-                <div class="flex -space-x-2 overflow-hidden">
-                    <img class="inline-block h-6 w-6 rounded-full ring-2 ring-slate-800 object-cover" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100" alt="">
-                    <img class="inline-block h-6 w-6 rounded-full ring-2 ring-slate-800 object-cover" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100" alt="">
+
+            <!-- Mic 3 (Locked) -->
+            <div class="mic-slot" style="top: 18%; left: 62%;">
+                <div class="relative w-12 h-12 rounded-full bg-slate-800/80 border-2 border-slate-600 flex items-center justify-center shadow-lg">
+                    <i class="fa-solid fa-lock text-amber-400 text-xs"></i>
+                    <span class="absolute -bottom-1 bg-slate-700 text-slate-300 text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">3</span>
                 </div>
-                <button class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-3.5 py-1.5 rounded-xl shadow transition flex items-center gap-1">
-                    প্রবেশ করুন <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                </button>
             </div>
-        </div>
 
-        <!-- Room Card 3 -->
-        <div class="bg-slate-800/80 border border-slate-700/60 rounded-2xl p-4 hover:border-purple-500/50 transition shadow-lg space-y-3">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-2">
-                    <span class="bg-red-500/20 text-red-400 border border-red-500/30 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase animate-pulse">
-                        <i class="fa-solid fa-circle text-[8px] mr-1"></i> লাইভ
-                    </span>
-                    <span class="text-xs text-slate-400"><i class="fa-solid fa-users mr-1"></i> ১৬/১৬ জন</span>
+            <!-- Mic 4 (Locked) -->
+            <div class="mic-slot" style="top: 18%; left: 85%;">
+                <div class="relative w-12 h-12 rounded-full bg-slate-800/80 border-2 border-slate-600 flex items-center justify-center shadow-lg">
+                    <i class="fa-solid fa-lock text-amber-400 text-xs"></i>
+                    <span class="absolute -bottom-1 bg-slate-700 text-slate-300 text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">4</span>
                 </div>
-                <span class="text-xs bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-md font-medium">গেমিং জোন</span>
             </div>
-            <div>
-                <h4 class="font-bold text-sm text-white">🎮 ফ্রি ফায়ার স্কোয়াড ভয়েস চ্যাট 🕹️</h4>
-                <p class="text-[11px] text-slate-400 mt-0.5">হোস্ট: রায়হান ভাই • র‍্যাংক পুশ টিম!</p>
-            </div>
-            <div class="flex items-center justify-between pt-2 border-t border-slate-700/50">
-                <div class="flex -space-x-2 overflow-hidden">
-                    <img class="inline-block h-6 w-6 rounded-full ring-2 ring-slate-800 object-cover" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100" alt="">
-                    <img class="inline-block h-6 w-6 rounded-full ring-2 ring-slate-800 object-cover" src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=100" alt="">
-                </div>
-                <button class="bg-slate-700 text-slate-400 text-xs font-bold px-3.5 py-1.5 rounded-xl cursor-not-allowed">
-                    রুম ফুল
-                </button>
-            </div>
-        </div>
 
-    </main>
-
-    <!-- Bottom Navigation Bar -->
-    <nav class="bg-slate-800 border-t border-slate-700 px-6 py-2.5 flex justify-between items-center text-slate-400">
-        <button class="flex flex-col items-center text-purple-400">
-            <i class="fa-solid fa-house text-base"></i>
-            <span class="text-[10px] mt-0.5 font-medium">হোম</span>
-        </button>
-        <button class="flex flex-col items-center hover:text-white transition">
-            <i class="fa-solid fa-compass text-base"></i>
-            <span class="text-[10px] mt-0.5 font-medium">ডিসকভার</span>
-        </button>
-        <button class="flex flex-col items-center hover:text-white transition">
-            <i class="fa-solid fa-comment-dots text-base"></i>
-            <span class="text-[10px] mt-0.5 font-medium">চ্যাট</span>
-        </button>
-        <button class="flex flex-col items-center hover:text-white transition">
-            <i class="fa-solid fa-user text-base"></i>
-            <span class="text-[10px] mt-0.5 font-medium">প্রোফাইল</span>
-        </button>
-    </nav>
-
-</body>
-                                                                                                                     </html>
+            <!-- Mic 5 -->
+            <div class="mic-slot" style="top: 3
