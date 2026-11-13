@@ -4,114 +4,853 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Imo Voice Club - Pro Full Screen UI</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap');
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
         body {
-            font-family: 'Hind Siliguri', sans-serif;
-            background-color: #000000;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0f172a;
             color: #ffffff;
+            height: 100vh;
+            overflow: hidden;
         }
-        /* Imo Style Staggered Mic Grid Layout */
-        .mic-grid-container {
-            position: relative;
+        /* লগইন স্ক্রিন */
+        #login-screen {
+            padding: 25px 15px;
+            max-width: 450px;
+            margin: 40px auto;
+            background: #1e293b;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+        }
+        .input-box {
             width: 100%;
-            height: 380px;
+            padding: 12px;
+            margin-top: 12px;
+            border-radius: 8px;
+            border: 1px solid #475569;
+            background: #0f172a;
+            color: white;
+            font-size: 14px;
         }
-        .mic-slot {
-            position: absolute;
+        .btn {
+            background: #38bdf8;
+            color: #0f172a;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 12px;
+            font-size: 15px;
+        }
+
+        /* মূল ফুল-স্ক্রিন ভয়েস ক্লাব (ইমো স্টাইল) */
+        #voice-club-screen {
+            display: none;
+            width: 100%;
+            height: 100vh;
+            max-width: 500px;
+            margin: auto;
+            position: relative;
+            background-color: #111827;
+            /* ডিফল্ট সুন্দর ব্যাকগ্রাউন্ড, ওনার চাইলে যেকোনো ছবি বা টিভি লাগাতে পারবে */
+            background-image: linear-gradient(to bottom, rgba(0,0,0,0.45), rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.75)), url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            transform: translate(-50%, -50%);
+            justify-content: space-between;
         }
+
+        /* লাইভ পেমেন্ট টিকার */
+        .payout-ticker {
+            background: rgba(5, 150, 105, 0.85);
+            color: #fff;
+            padding: 4px 10px;
+            font-size: 11px;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        .ticker-text {
+            display: inline-block;
+            animation: scrollText 20s linear infinite;
+        }
+        @keyframes scrollText {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* টপ হেডার বার (ইমো স্টাইল) */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+        }
+        .room-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.35);
+            padding: 4px 10px 4px 4px;
+            border-radius: 20px;
+            backdrop-filter: blur(4px);
+        }
+        .room-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #f59e0b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            overflow: hidden;
+        }
+        .room-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .top-badges {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+        .pill-badge {
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(4px);
+            padding: 4px 9px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+
+        /* রোল ও র‍্যাঙ্ক সাব-বার */
+        .sub-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2px 12px 6px 12px;
+        }
+        .rank-pill {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            color: #fbbf24;
+        }
+        .role-mini-btns button {
+            border: none;
+            border-radius: 10px;
+            padding: 3px 7px;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* ১৫টি মাইক গ্রিড (একদম পরিষ্কার, পেছনের টিভি ঢাকবে না) */
+        .voice-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px 4px;
+            padding: 6px 10px;
+        }
+        .seat-box {
+            text-align: center;
+            cursor: pointer;
+        }
+        .seat {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: rgba(255, 255, 255, 0.14);
+            backdrop-filter: blur(2px);
+            border: 1.5px solid rgba(255, 255, 255, 0.35);
+            font-size: 18px;
+        }
+        .seat.occupied-owner {
+            border: 2.5px solid #38bdf8;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.7);
+        }
+        .seat.occupied-admin {
+            border: 2.5px solid #f472b6;
+            box-shadow: 0 0 8px rgba(244, 114, 182, 0.6);
+        }
+        .seat.occupied-member {
+            border: 2px solid #34d399;
+        }
+        .seat img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        .mute-tag {
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            background: #ef4444;
+            color: white;
+            font-size: 9px;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .seat-name {
+            font-size: 10px;
+            margin-top: 3px;
+            color: #ffffff;
+            text-shadow: 1px 1px 3px #000000;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 62px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* মাঝখানের ফাঁকা অংশ (যাতে ব্যাকগ্রাউন্ডের টিভি পুরো দেখা যায়) ও ফ্লোটিং চ্যাট */
+        .middle-spacer {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 0 12px 6px 12px;
+            overflow: hidden;
+        }
+        .floating-chat {
+            width: 78%;
+            max-height: 195px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .chat-msg {
+            background: rgba(0, 0, 0, 0.38);
+            padding: 5px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            width: fit-content;
+            max-width: 100%;
+            text-shadow: 1px 1px 2px #000;
+            line-height: 1.3;
+        }
+        .chat-emoji-big {
+            font-size: 28px;
+            display: block;
+            margin-top: 2px;
+        }
+
+        /* কুইক ইমোজি পপআপ ও গিফট/কন্ট্রোল পপআপ */
+        .popup-drawer {
+            display: none;
+            background: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(8px);
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding: 12px;
+            border-radius: 16px 16px 0 0;
+        }
+        .emoji-grid {
+            display: flex;
+            justify-content: space-around;
+            font-size: 26px;
+            padding: 6px 0;
+        }
+        .emoji-grid span { cursor: pointer; transition: 0.15s; }
+        .emoji-grid span:active { transform: scale(1.3); }
+
+        .gift-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .gift-item {
+            background: rgba(30, 41, 59, 0.9);
+            border: 1px solid #334155;
+            border-radius: 10px;
+            padding: 8px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .ctrl-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .ctrl-btn {
+            padding: 9px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 12px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        /* বটম ইমো অ্যাকশন বার (Say... + ইমোজি + গিফট + মেনু) */
+        .bottom-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px 12px 12px;
+            background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+        }
+        .say-input-wrap {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(5px);
+            border-radius: 22px;
+            padding: 4px 10px;
+        }
+        .say-input-wrap input {
+            background: transparent;
+            border: none;
+            color: white;
+            width: 100%;
+            font-size: 13px;
+            outline: none;
+            padding: 5px;
+        }
+        .say-input-wrap input::placeholder { color: #e2e8f0; }
+        .circle-icon-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(5px);
+            color: white;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        /* ওয়ালেট মডাল */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+        .modal-box {
+            background: #1e293b;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 14px;
+            padding: 16px;
+            border: 2px solid #10b981;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        .proof-item {
+            border-bottom: 1px solid #334155;
+            padding: 6px 0;
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+        }
+        input[type="file"] { display: none; }
     </style>
 </head>
-<body class="flex flex-col h-screen max-w-md mx-auto bg-slate-950 shadow-2xl overflow-hidden border-x border-slate-800 relative">
+<body>
 
-    <!-- Background Image with Overlay -->
-    <div class="absolute inset-0 z-0">
-        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600" class="w-full h-full object-cover opacity-40 filter blur-[1px]" alt="Background">
-        <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/90"></div>
+    <!-- ১. ওটিপি লগইন স্ক্রিন -->
+    <div id="login-screen">
+        <h2 style="color: #38bdf8;">🎙️ ভয়েস ক্লাব লগইন</h2>
+        <p style="color: #94a3b8; font-size: 13px; margin-top: 6px;">লগইন করলেই ৳১০০ + ৫০ 💎 বোনাস!</p>
+        
+        <div id="phone-step">
+            <input type="tel" id="phone-input" class="input-box" placeholder="০১XXXXXXXXX (মোবাইল নম্বর দিন)">
+            <button class="btn" onclick="sendOTP()">ওটিপি (OTP) পাঠান</button>
+        </div>
+
+        <div id="otp-step" style="display:none;">
+            <p id="otp-instruction" style="color: #10b981; font-size: 13px; margin-top: 10px;"></p>
+            <input type="number" id="otp-input" class="input-box" placeholder="৪ সংখ্যার ওটিপি লিখুন">
+            <button class="btn" style="background: #10b981;" onclick="verifyOTP()">ভেরিফাই ও প্রবেশ করুন</button>
+        </div>
     </div>
 
-    <!-- Top Announcement Banner -->
-    <div class="relative z-10 bg-emerald-600/90 text-white text-[11px] px-3 py-1 font-medium text-center truncate shadow">
-        ✅ লাইভ পেমেন্ট: Owner আজ ৮৩,৫০ টাকা ক্যাশআউট করেছেন!
-    </div>
-
-    <!-- Header Section -->
-    <header class="relative z-10 px-3 py-2 flex items-center justify-between">
-        <div class="flex items-center space-x-2 bg-black/40 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 max-w-[55%]">
-            <div class="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center text-slate-950 font-bold shrink-0 shadow">
-                <i class="fa-solid fa-crown text-xs"></i>
+    <!-- ২. মূল ফুল-স্ক্রিন ভয়েস ক্লাব (ইমো স্টাইল) -->
+    <div id="voice-club-screen" style="display:none;">
+        
+        <div>
+            <!-- লাইভ পেমেন্ট টিকার -->
+            <div class="payout-ticker">
+                <span class="ticker-text">
+                    ✅ লাইভ পেমেন্ট: Owner আজ ৳৩,৫০০ ক্যাশআউট করেছেন! | 🎉 রাকিব বিকাশে ৳১,২০০ পেয়েছেন! | 💎 সাকিব ১০০ ডায়মন্ড কিনেছেন!
+                </span>
             </div>
-            <div class="overflow-hidden">
-                <h1 class="font-bold text-xs leading-tight text-white truncate">টাকাইলেই 🎸 গানে...</h1>
-                <p class="text-[9px] text-slate-300 truncate">Members: 3.2K • রোল: OWNER</p>
+
+            <!-- টপ হেডার বার -->
+            <div class="top-bar">
+                <div class="room-info">
+                    <div class="room-avatar" id="room-dp">👑</div>
+                    <div>
+                        <div id="room-title" style="font-size: 13px; font-weight: bold;">টাঙ্গাইলে 🎸 গানে...</div>
+                        <div style="font-size: 10px; color: #cbd5e1;">Members: 3.2K • রোল: <b id="current-role-text" style="color:#fbbf24;">OWNER</b></div>
+                    </div>
+                </div>
+                <div class="top-badges">
+                    <span class="pill-badge" style="color:#38bdf8;" onclick="openWalletModal()">💎 <span id="diamond-count">50</span></span>
+                    <span class="pill-badge" style="color:#10b981;" onclick="openWalletModal()">৳<span id="wallet-balance">100</span></span>
+                </div>
+            </div>
+
+            <!-- র‍্যাঙ্ক ও রোল সুইচার বার -->
+            <div class="sub-bar">
+                <div class="rank-pill">🏆 Hourly Rank <b>6</b></div>
+                <div class="role-mini-btns">
+                    <button style="background:#f59e0b; color:#000;" onclick="setRole('owner')">Owner</button>
+                    <button style="background:#38bdf8; color:#000;" onclick="setRole('admin')">Admin</button>
+                    <button style="background:#94a3b8; color:#000;" onclick="setRole('member')">Member</button>
+                </div>
+            </div>
+
+            <!-- ১৫টি মাইক গ্রিড (একদম পরিষ্কার, কোনো ব্যাকগ্রাউন্ড ঢাকবে না) -->
+            <div class="voice-grid" id="seats-container"></div>
+        </div>
+
+        <!-- মাঝখানের ফাঁকা অংশ (ব্যাকগ্রাউন্ড টিভি পুরো দেখা যাবে) + ফ্লোটিং চ্যাট -->
+        <div class="middle-spacer">
+            <div class="floating-chat" id="chat-box">
+                <div class="chat-msg" style="color: #fbbf24;">স্বাগতম! নিচের ইমোজি বা গিফট বাটনে চাপ দিন।</div>
             </div>
         </div>
 
-        <!-- Diamonds & Balance -->
-        <div class="flex items-center space-x-1.5">
-            <div class="bg-black/50 backdrop-blur border border-white/10 px-2 py-1 rounded-full flex items-center space-x-1 text-[11px]">
-                <i class="fa-solid fa-gem text-cyan-400 text-xs"></i>
-                <span class="font-bold">50</span>
+        <!-- ইমোজি পপআপ ড্রয়ার -->
+        <div class="popup-drawer" id="emoji-drawer">
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#94a3b8; margin-bottom:4px;">
+                <span>ইমোজি পাঠান:</span>
+                <span style="cursor:pointer; color:#ef4444;" onclick="closeDrawers()">✕ বন্ধ</span>
             </div>
-            <div class="bg-black/50 backdrop-blur border border-white/10 px-2 py-1 rounded-full flex items-center space-x-1 text-[11px]">
-                <span class="text-amber-400 font-bold">৳</span>
-                <span class="font-bold">100</span>
+            <div class="emoji-grid">
+                <span onclick="sendQuickEmoji('🤣')">🤣</span>
+                <span onclick="sendQuickEmoji('😘')">😘</span>
+                <span onclick="sendQuickEmoji('❤️')">❤️</span>
+                <span onclick="sendQuickEmoji('🔥')">🔥</span>
+                <span onclick="sendQuickEmoji('👏')">👏</span>
+                <span onclick="sendQuickEmoji('😭')">😭</span>
+                <span onclick="sendQuickEmoji('👑')">👑</span>
             </div>
         </div>
-    </header>
 
-    <!-- Room Rank & Tags -->
-    <div class="relative z-10 px-4 py-1 flex items-center space-x-2">
-        <span class="bg-amber-500/80 text-slate-950 text-[10px] px-2 py-0.5 rounded-md font-bold flex items-center gap-1 shadow">
-            <i class="fa-solid fa-trophy"></i> Hourly Rank 6
-        </span>
-        <span class="bg-amber-500 text-slate-950 text-[10px] px-2 py-0.5 rounded-full font-bold">Owner</span>
-        <span class="bg-sky-500 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">Admin</span>
-        <span class="bg-slate-700 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">Member</span>
+        <!-- গিফট শপ ড্রয়ার -->
+        <div class="popup-drawer" id="gift-drawer">
+            <div style="display:flex; justify-content:space-between; align-items:center; font-size:12px;">
+                <span style="color:#38bdf8; font-weight:bold;">🎁 হোস্টকে গিফট পাঠান</span>
+                <div>
+                    <button onclick="buyDiamonds()" style="background:#f59e0b; color:#000; border:none; padding:3px 8px; border-radius:5px; font-weight:bold; font-size:11px; margin-right:8px;">+ ডায়মন্ড</button>
+                    <span style="cursor:pointer; color:#ef4444;" onclick="closeDrawers()">✕</span>
+                </div>
+            </div>
+            <div class="gift-grid">
+                <div class="gift-item" onclick="sendGift('🌹 গোলাপ', 10)">
+                    <div style="font-size:22px;">🌹</div>
+                    <div style="font-size:11px; font-weight:bold;">গোলাপ</div>
+                    <div style="font-size:10px; color:#38bdf8;">10 💎</div>
+                </div>
+                <div class="gift-item" onclick="sendGift('🏎️ স্পোর্টস কার', 50)">
+                    <div style="font-size:22px;">🏎️</div>
+                    <div style="font-size:11px; font-weight:bold;">কার</div>
+                    <div style="font-size:10px; color:#38bdf8;">50 💎</div>
+                </div>
+                <div class="gift-item" onclick="sendGift('🏰 রাজপ্রাসাদ', 100)">
+                    <div style="font-size:22px;">🏰</div>
+                    <div style="font-size:11px; font-weight:bold;">ক্যাসেল</div>
+                    <div style="font-size:10px; color:#38bdf8;">100 💎</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- রুম কন্ট্রোল মেনু ড্রয়ার -->
+        <div class="popup-drawer" id="menu-drawer">
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#fbbf24; font-weight:bold;">
+                <span>🛡️ রুম সেটিংস ও কন্ট্রোল</span>
+                <span style="cursor:pointer; color:#ef4444;" onclick="closeDrawers()">✕ বন্ধ</span>
+            </div>
+            <div class="ctrl-grid">
+                <label class="ctrl-btn" style="background: #38bdf8; color: #0f172a;">
+                    👤 ডিপি বদলান
+                    <input type="file" accept="image/*" onchange="changeDP(event)">
+                </label>
+                <button class="ctrl-btn" id="chat-toggle-btn" style="background: #ef4444; color: white;" onclick="toggleChat()">
+                    💬 চ্যাট অফ করুন
+                </button>
+                <label class="ctrl-btn owner-only" style="background: #f59e0b; color: #0f172a;">
+                    🖼️ ব্যাকগ্রাউন্ড টিভি (Owner)
+                    <input type="file" accept="image/*" onchange="changeBg(event)">
+                </label>
+                <button class="ctrl-btn owner-only" style="background: #10b981; color: #0f172a;" onclick="changeRoomName()">
+                    ✏️ রুমের নাম (Owner)
+                </button>
+            </div>
+        </div>
+
+        <!-- নিচের ইমো অ্যাকশন বার -->
+        <div class="bottom-bar">
+            <div class="say-input-wrap">
+                <input type="text" id="msg-input" placeholder="Say..." onkeypress="if(event.key==='Enter') sendMessage()">
+                <span style="cursor:pointer; color:#38bdf8; font-weight:bold; font-size:13px;" onclick="sendMessage()">➤</span>
+            </div>
+            <button class="circle-icon-btn" onclick="toggleDrawer('emoji-drawer')">😊</button>
+            <button class="circle-icon-btn" style="background: rgba(244, 63, 94, 0.75);" onclick="toggleDrawer('gift-drawer')">🎁</button>
+            <button class="circle-icon-btn" onclick="openWalletModal()">💰</button>
+            <button class="circle-icon-btn" id="menu-btn" onclick="toggleDrawer('menu-drawer')">🎛️</button>
+        </div>
+
     </div>
 
-    <!-- Main Mic Stage Area (Imo Staggered Layout) -->
-    <main class="relative z-10 flex-1 overflow-hidden px-2">
-        <div class="mic-grid-container">
-            
-            <!-- Mic 1 (Owner / Crown) -->
-            <div class="mic-slot" style="top: 18%; left: 15%;">
-                <div class="relative w-12 h-12 rounded-full bg-slate-800 border-2 border-amber-400 flex items-center justify-center shadow-lg">
-                    <i class="fa-solid fa-crown text-amber-400 text-xs absolute -top-2 z-20"></i>
-                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" class="w-full h-full rounded-full object-cover" alt="Mic">
-                    <span class="absolute -bottom-1 bg-amber-500 text-slate-950 text-[8px] px-1 rounded font-bold">আপনি (Own...</span>
-                </div>
+    <!-- ওয়ালেট ও উইথড্র মডাল -->
+    <div id="wallet-modal" class="modal-overlay">
+        <div class="modal-box">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #334155; padding-bottom:8px;">
+                <h3 style="color:#10b981; font-size:16px;">💰 ওয়ালেট ও পেমেন্ট প্রুফ</h3>
+                <button onclick="closeWalletModal()" style="background:#ef4444; color:white; border:none; border-radius:4px; padding:4px 8px; cursor:pointer;">X</button>
             </div>
 
-            <!-- Mic 2 (Locked) -->
-            <div class="mic-slot" style="top: 18%; left: 38%;">
-                <div class="relative w-12 h-12 rounded-full bg-slate-800/80 border-2 border-slate-600 flex items-center justify-center shadow-lg">
-                    <i class="fa-solid fa-lock text-amber-400 text-xs"></i>
-                    <span class="absolute -bottom-1 bg-slate-700 text-slate-300 text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">2</span>
-                </div>
+            <div style="background:#0f172a; padding:10px; border-radius:8px; margin-top:10px; text-align:center;">
+                <div style="font-size:12px; color:#94a3b8;">বর্তমান উত্তোলনযোগ্য ব্যালেন্স</div>
+                <div style="font-size:24px; font-weight:bold; color:#10b981;">৳<span id="modal-balance">100</span></div>
+                <div id="withdraw-rule-tag" style="font-size:11px; color:#10b981; margin-top:4px;">👑 Owner মোড: দৈনিক (Daily Instant) উইথড্র চালু!</div>
             </div>
 
-            <!-- Mic 3 (Locked) -->
-            <div class="mic-slot" style="top: 18%; left: 62%;">
-                <div class="relative w-12 h-12 rounded-full bg-slate-800/80 border-2 border-slate-600 flex items-center justify-center shadow-lg">
-                    <i class="fa-solid fa-lock text-amber-400 text-xs"></i>
-                    <span class="absolute -bottom-1 bg-slate-700 text-slate-300 text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">3</span>
-                </div>
+            <div style="margin-top:10px;">
+                <select id="pay-method" class="input-box" style="padding:8px;">
+                    <option value="bKash">বিকাশ (bKash)</option>
+                    <option value="Nagad">নগদ (Nagad)</option>
+                </select>
+                <input type="tel" id="pay-number" class="input-box" style="padding:8px;" placeholder="আপনার বিকাশ / নগদ নম্বর দিন">
+                <input type="number" id="pay-amount" class="input-box" style="padding:8px;" placeholder="টাকার পরিমাণ (সর্বনিম্ন ৳১০০)">
+                <button class="btn" style="background:#10b981; margin-top:10px;" onclick="processWithdraw()">💸 এখনই উইথড্র করুন</button>
             </div>
 
-            <!-- Mic 4 (Locked) -->
-            <div class="mic-slot" style="top: 18%; left: 85%;">
-                <div class="relative w-12 h-12 rounded-full bg-slate-800/80 border-2 border-slate-600 flex items-center justify-center shadow-lg">
-                    <i class="fa-solid fa-lock text-amber-400 text-xs"></i>
-                    <span class="absolute -bottom-1 bg-slate-700 text-slate-300 text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">4</span>
+            <div style="background:#0f172a; padding:8px; border-radius:8px; margin-top:10px;">
+                <div style="color:#38bdf8; font-weight:bold; font-size:12px; margin-bottom:5px;">📜 ভেরিফাইড পেমেন্ট প্রুফ:</div>
+                <div id="proof-history">
+                    <div class="proof-item">
+                        <span>👑 <b>Owner (Daily)</b> - bKash</span>
+                        <span style="color:#10b981; font-weight:bold;">৳৩,৫০০ (Paid ✅)</span>
+                    </div>
+                    <div class="proof-item">
+                        <span>👤 <b>রাকিব (Weekly)</b> - Nagad</span>
+                        <span style="color:#10b981; font-weight:bold;">৳১,২০০ (Paid ✅)</span>
+                    </div>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <!-- Mic 5 -->
-            <div class="mic-slot" style="top: 3
+    <script>
+        let currentRole = 'owner';
+        let chatEnabled = true;
+        let ownerBalance = 100;
+        let memberBalance = 100;
+        let diamonds = 50;
+        let generatedOTP = '';
+
+        // ১৫টি মাইক সিট (ইমো স্টাইল)
+        let seats = [
+            { id: 1, name: 'আপনি (Owner)', role: 'owner', muted: false, dp: '👑', occupied: true },
+            { id: 2, name: '2', role: 'empty', muted: false, dp: '🔒', occupied: false },
+            { id: 3, name: '3', role: 'empty', muted: false, dp: '🔒', occupied: false },
+            { id: 4, name: '4', role: 'empty', muted: false, dp: '🔒', occupied: false },
+            { id: 5, name: '5', role: 'empty', muted: false, dp: '🛋️', occupied: false },
+            { id: 6, name: 'হঠাৎ দেখা?', role: 'admin', muted: false, dp: '🛡️', occupied: true },
+            { id: 7, name: 'Rafsan A...', role: 'member', muted: true, dp: '🎧', occupied: true },
+            { id: 8, name: '8', role: 'empty', muted: false, dp: '🛋️', occupied: false },
+            { id: 9, name: '9', role: 'empty', muted: false, dp: '🔒', occupied: false },
+            { id: 10, name: '10', role: 'empty', muted: false, dp: '🛋️', occupied: false },
+            { id: 11, name: '11', role: 'empty', muted: false, dp: '🛋️', occupied: false },
+            { id: 12, name: '12', role: 'empty', muted: false, dp: '🛋️', occupied: false },
+            { id: 13, name: '13', role: 'empty', muted: false, dp: '🛋️', occupied: false },
+            { id: 14, name: '14', role: 'empty', muted: false, dp: '🛋️', occupied: false },
+            { id: 15, name: '15', role: 'empty', muted: false, dp: '🛋️', occupied: false }
+        ];
+
+        function sendOTP() {
+            let phone = document.getElementById('phone-input').value.trim();
+            if (phone.length < 11) { alert('সঠিক ১১ সংখ্যার মোবাইল নম্বর দিন!'); return; }
+            generatedOTP = Math.floor(1000 + Math.random() * 9000).toString();
+            document.getElementById('phone-step').style.display = 'none';
+            document.getElementById('otp-step').style.display = 'block';
+            document.getElementById('otp-instruction').innerHTML = `আপনার <b>${phone}</b> নম্বরে ওটিপি পাঠানো হয়েছে!<br><span style="color: #38bdf8;">[SMS কোড: <b>${generatedOTP}</b>]</span>`;
+            alert(`আপনার ওটিপি কোড হলো: ${generatedOTP}`);
+        }
+
+        function verifyOTP() {
+            let userOtp = document.getElementById('otp-input').value.trim();
+            if (userOtp === generatedOTP && userOtp !== '') {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('voice-club-screen').style.display = 'flex';
+                updateBalances();
+                renderSeats();
+                updateUIByRole();
+            } else {
+                alert('ভুল ওটিপি কোড! সঠিক কোডটি লিখুন।');
+            }
+        }
+
+        function toggleDrawer(drawerId) {
+            let target = document.getElementById(drawerId);
+            let isOpen = target.style.display === 'block';
+            closeDrawers();
+            if (!isOpen) target.style.display = 'block';
+        }
+
+        function closeDrawers() {
+            document.getElementById('emoji-drawer').style.display = 'none';
+            document.getElementById('gift-drawer').style.display = 'none';
+            document.getElementById('menu-drawer').style.display = 'none';
+        }
+
+        function updateBalances() {
+            let activeBal = (currentRole === 'owner') ? ownerBalance : memberBalance;
+            document.getElementById('wallet-balance').innerText = activeBal;
+            document.getElementById('modal-balance').innerText = activeBal;
+            document.getElementById('diamond-count').innerText = diamonds;
+        }
+
+        function setRole(role) {
+            currentRole = role;
+            document.getElementById('current-role-text').innerText = role.toUpperCase();
+            updateBalances();
+            updateUIByRole();
+            let ruleTag = document.getElementById('withdraw-rule-tag');
+            if (role === 'owner') {
+                ruleTag.innerText = '👑 Owner মোড: দৈনিক (Daily Instant) উইথড্র চালু!';
+                ruleTag.style.color = '#10b981';
+            } else {
+                ruleTag.innerText = '📅 Member/Admin মোড: প্রতি সপ্তাহে (Weekly) উইথড্র।';
+                ruleTag.style.color = '#f59e0b';
+            }
+        }
+
+        function updateUIByRole() {
+            let menuBtn = document.getElementById('menu-btn');
+            let ownerBtns = document.querySelectorAll('.owner-only');
+            if (currentRole === 'member') {
+                menuBtn.style.display = 'none';
+                closeDrawers();
+            } else {
+                menuBtn.style.display = 'flex';
+                ownerBtns.forEach(btn => {
+                    btn.style.display = (currentRole === 'owner') ? 'block' : 'none';
+                });
+            }
+        }
+
+        function renderSeats() {
+            let container = document.getElementById('seats-container');
+            container.innerHTML = '';
+            seats.forEach(seat => {
+                let seatClass = 'seat';
+                if (seat.occupied) {
+                    if (seat.role === 'owner') seatClass += ' occupied-owner';
+                    else if (seat.role === 'admin') seatClass += ' occupied-admin';
+                    else seatClass += ' occupied-member';
+                }
+                let dpContent = seat.dp.startsWith('data:image') ? `<img src="${seat.dp}">` : seat.dp;
+                let muteTag = (seat.occupied && seat.muted) ? `<span class="mute-tag">🔇</span>` : '';
+
+                container.innerHTML += `
+                    <div class="seat-box" onclick="manageUser(${seat.id})">
+                        <div class="${seatClass}">
+                            ${dpContent}
+                            ${muteTag}
+                        </div>
+                        <div class="seat-name">${seat.name}</div>
+                    </div>
+                `;
+            });
+        }
+
+        function manageUser(targetId) {
+            let target = seats.find(u => u.id === targetId);
+            if (!target) return;
+
+            if (!target.occupied) {
+                if (confirm(`${targetId} নম্বর মাইকে বসতে চান?`)) {
+                    target.occupied = true;
+                    target.name = (currentRole === 'owner') ? 'আপনি' : (currentRole === 'admin' ? 'Admin' : 'মিষ্টি মেয়ে');
+                    target.role = currentRole;
+                    target.dp = (currentRole === 'owner') ? '👑' : (currentRole === 'admin' ? '🛡️' : '👩');
+                    target.muted = false;
+                    addChatHTML(`<span style="color:#38bdf8;">🎙️ <b>${target.name}</b> ${targetId} নম্বর মাইকে বসেছেন</span>`);
+                    renderSeats();
+                }
+                return;
+            }
+
+            if (currentRole === 'member') return;
+            if (currentRole === 'admin' && target.role === 'owner') {
+                alert('⚠️ আপনি Owner-কে মিউট বা কিক করতে পারবেন না!');
+                return;
+            }
+            if (target.id === 1 && currentRole === 'owner') return;
+
+            let action = prompt(`${target.name}-এর জন্য কী করতে চান?\n1: মিউট / আনমিউট\n2: মাইক থেকে নামান (Kick)`);
+            if (action === '1') {
+                target.muted = !target.muted;
+                renderSeats();
+            } else if (action === '2') {
+                addChatHTML(`<span style="color:#ef4444;">🚫 <b>${target.name}</b>-কে মাইক থেকে নামানো হয়েছে</span>`);
+                target.occupied = false;
+                target.name = `${target.id}`;
+                target.role = 'empty';
+                target.dp = '🛋️';
+                target.muted = false;
+                renderSeats();
+            }
+        }
+
+        function sendQuickEmoji(emoji) {
+            if (!chatEnabled && currentRole === 'member') { alert('🔒 চ্যাট বন্ধ আছে!'); return; }
+            let senderName = (currentRole === 'owner') ? 'আপনি' : (currentRole === 'admin' ? 'হঠাৎ দেখা?' : 'মিষ্টি মেয়ে');
+            addChatHTML(`<span style="color:#93c5fd; font-weight:bold;">${senderName}</span><span class="chat-emoji-big">${emoji}</span>`);
+            closeDrawers();
+        }
+
+        function sendMessage() {
+            let input = document.getElementById('msg-input');
+            let text = input.value.trim();
+            if (!text) return;
+            if (!chatEnabled && currentRole === 'member') { alert('🔒 চ্যাট বন্ধ আছে!'); return; }
+            let senderName = (currentRole === 'owner') ? 'আপনি' : (currentRole === 'admin' ? 'হঠাৎ দেখা?' : 'মিষ্টি মেয়ে');
+            addChatHTML(`<b style="color:#38bdf8;">${senderName}:</b> ${text}`);
+            input.value = '';
+        }
+
+        function addChatHTML(html) {
+            let chatBox = document.getElementById('chat-box');
+            chatBox.innerHTML += `<div class="chat-msg">${html}</div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function buyDiamonds() {
+            diamonds += 100;
+            ownerBalance += 70;
+            updateBalances();
+            addChatHTML(`<span style="color:#10b981;">💎 ১০০ ডায়মন্ড রিচার্জ সফল! ওনার কমিশন +৳৭০</span>`);
+        }
+
+        function sendGift(giftName, cost) {
+            if (diamonds < cost) { alert('পর্যাপ্ত ডায়মন্ড নেই! "+ ডায়মন্ড" বাটনে চাপ দিন।'); return; }
+            diamonds -= cost;
+            let commission = Math.round(cost * 0.7);
+            ownerBalance += commission;
+            memberBalance += Math.round(cost * 0.2);
+            updateBalances();
+            addChatHTML(`<span style="color:#f472b6;">🎁 <b>${currentRole.toUpperCase()}</b> পাঠিয়েছেন ${giftName} (${cost}💎)! ওনার আয় +৳${commission}</span>`);
+            closeDrawers();
+        }
+
+        function toggleChat() {
+            chatEnabled = !chatEnabled;
+            let btn = document.getElementById('chat-toggle-btn');
+            btn.innerText = chatEnabled ? '💬 চ্যাট অফ করুন' : '💬 চ্যাট চালু করুন';
+            btn.style.background = chatEnabled ? '#ef4444' : '#10b981';
+            addChatHTML(`<span style="color:#fbbf24;">${chatEnabled ? '✅ চ্যাট চালু করা হয়েছে' : '🔒 চ্যাট বন্ধ করা হয়েছে'}</span>`);
+            closeDrawers();
+        }
+
+        function changeDP(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    let user = seats.find(u => u.occupied && u.role === currentRole);
+                    if (user) { user.dp = e.target.result; renderSeats(); }
+                    if (currentRole === 'owner') {
+                        document.getElementById('room-dp').innerHTML = `<img src="${e.target.result}">`;
+                    }
+                    closeDrawers();
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function changeBg(event) {
+            if (currentRole !== 'owner') return;
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('voice-club-screen').style.backgroundImage = `linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.05) 45%, rgba(0,0,0,0.7)), url('${e.target.result}')`;
+                    closeDrawers();
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function changeRoomName() {
+            if (currentRole !== 'owner') return;
+            let newName = prompt('রুমের নতুন নাম লিখুন:');
+            if (newName) {
+                document.getElementById('room-title').innerText = newName;
+                closeDrawers();
+            }
+        }
+
+        function openWalletModal() {
+            updateBalances();
+            document.getElementById('wallet-modal').style.display = 'flex';
+        }
+        function closeWalletModal() {
+            document.getElementById('wallet-modal').style.display = 'none';
+        }
+
+        function processWithdraw() {
+            let method = document.getElementById('pay-method').value;
+            let num = document.getElementById('pay-number').value.trim();
+            let amt = parseInt(document.getElementById('pay-amount').value);
+
+            if (num.length < 11 || !amt || amt < 100) { alert('সঠিক নম্বর এবং সর্বনিম্ন ৳১০০ লিখুন!'); return; }
+
+            if (currentRole === 'owner') {
+                if (amt > ownerBalance) { alert('পর্যাপ্ত ব্যালেন্স নেই!'); return; }
+                ownerBalance -= amt;
+                updateBalances();
+                addProofItem(`👑 Owner (Daily)`, method, amt, 'Paid Instant ✅');
+                alert(`🎉 অভিনন্দন মালিক! ৳${amt} আপনার ${method} নম্বরে পাঠানো হয়েছে!`);
+            } else {
+                if (amt > memberBalance) { alert('পর্যাপ্ত ব্যালেন্স নেই!'); return; }
+                memberBalance -= amt;
+                updateBalances();
+                addProofItem(`👤 ${currentRole.toUpperCase()} (Weekly)`, method, amt, 'Weekly Queued ⏳');
+                alert(`✅ সাপ্তাহিক উইথড্র রিকোয়েস্ট (৳${amt}) গ্রহণ করা হয়েছে!`);
+            }
+            document.getElementById('pay-amount').value = '';
+        }
+
+        function addProofItem(userLabel, method, amount, status) {
+            let list = document.getElementById('proof-history');
+            list.innerHTML = `<div class="proof-item"><span><b>${userLabel}</b> - ${method}</span><span style="color:#10b981; font-weight:bold;">৳${amount} (${status})</span></div>` + list.innerHTML;
+        }
+    </script>
+</body>
+    </html>
