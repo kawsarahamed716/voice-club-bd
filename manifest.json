@@ -1,15 +1,14 @@
-
 {
   "id": "/voice-club-bd/",
-  "name": "Voice Club",
-  "short_name": "Voice Club",
-  "description": "Voice Club - আড্ডা, ভয়েস রুম ও লাইভ কমিউনিটি",
+  "name": "Zerin Chat",
+  "short_name": "Zerin",
+  "description": "Zerin Chat - Voice Chat, Live Room and Community",
   "start_url": "/voice-club-bd/",
   "scope": "/voice-club-bd/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#0F172A",
-  "theme_color": "#7C3AED",
+  "background_color": "#0A0D20",
+  "theme_color": "#7928CA",
   "icons": [
     {
       "src": "/voice-club-bd/icons/icon-192.png",
