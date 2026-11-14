@@ -11,13 +11,13 @@
   "theme_color": "#7928CA",
   "icons": [
     {
-      "src": "/voice-club-bd/icons/icon-192.png",
+      "src": "/voice-club-bd/icons/icon-192(1).png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/voice-club-bd/icons/icon-512.png",
+      "src": "/voice-club-bd/icons/icon-512(1).png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
