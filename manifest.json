@@ -1,16 +1,12 @@
-{
-  "name": "Voice Club BD",
-  "short_name": "VoiceClub",
-  "start_url": "./index.html",
-  "scope": "./",
+"background_color": "#1c3bbc",
+  "dir": "ltr",
   "display": "standalone",
-  "background_color": "#0b0f19",
-  "theme_color": "#0b0f19",
-  "icons": [
-    {
-      "src": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=192",
-      "sizes": "192x192",
-      "type": "image/png"
-    }
-  ]
+  "name": "Imo Voice Club",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "Voice Club",
+  "start_url": "/",
+  "theme_color": "#107ca6",
+  "id": "voice-club",
+  "description": "Voice Club is a social voice chat and live room platform."
 }
