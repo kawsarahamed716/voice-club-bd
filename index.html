@@ -1,333 +1,257 @@
+Zerin Chat — সম্পূর্ণ index.html
+
+নিচের কোডটি "index.html" ফাইলে বসাবে। আগের কোড সম্পূর্ণ মুছে এটি বসাবে।
+
 <!DOCTYPE html>
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zerin Chat</title>
 <meta name="theme-color" content="#7928CA">
-<meta name="description" content="Zerin Chat - Voice Chat, Live Room and Community">
-
 <link rel="manifest" href="/voice-club-bd/manifest.json">
-<link rel="icon" href="/voice-club-bd/icons/icon-192(1).png">
-<link rel="apple-touch-icon" href="/voice-club-bd/icons/icon-192(1).png">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Arial,sans-serif;background:#0a0d20;color:white;min-height:100vh}
-.app{max-width:500px;min-height:100vh;margin:auto;background:linear-gradient(160deg,#17133b,#090d20 65%);padding-bottom:85px}
-header{padding:22px 18px;display:flex;align-items:center;justify-content:space-between;background:rgba(121,40,202,.18);border-bottom:1px solid rgba(255,255,255,.08)}
-.brand{font-size:23px;font-weight:bold;color:#d7a5ff}
-.profile{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#7928ca,#e04fff);font-size:20px}
-.welcome{padding:25px 20px 12px}
-.welcome h1{font-size:25px;margin-bottom:9px}
-.welcome p{color:#b8b7ca;font-size:14px}
-.banner{margin:15px;padding:24px 20px;border-radius:20px;background:linear-gradient(120deg,#7928ca,#4022a8,#e04fff)}
-.banner h2{font-size:22px;margin-bottom:9px}
-.banner p{font-size:14px;color:#f0e7ff;line-height:1.6}
-.section-title{padding:15px 18px 10px;font-size:19px}
-.rooms{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 15px}
-.room{padding:20px 12px;text-align:center;border-radius:17px;background:#191d3b;border:1px solid rgba(255,255,255,.08)}
-.room .emoji{font-size:32px;margin-bottom:10px}
-.room h3{font-size:15px;margin-bottom:7px}
-.room p{color:#aaa9bf;font-size:12px}
-.room button{margin-top:13px;padding:9px 17px;border:0;border-radius:20px;color:white;font-weight:bold;background:linear-gradient(90deg,#7928ca,#d13df0)}
-.notice{margin:20px 15px;padding:17px;border-radius:15px;background:#191d3b;color:#c9c7dc;font-size:13px;line-height:1.7}
-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:500px;display:flex;justify-content:space-around;padding:13px 5px;background:#11152d;border-top:1px solid rgba(255,255,255,.1)}
-nav a{text-decoration:none;color:#aaa9bf;text-align:center;font-size:12px}
-nav a span{display:block;font-size:21px;margin-bottom:4px}
-nav a.active{color:#d7a5ff}
-button{cursor:pointer}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#090d20;color:white;font-family:Arial,sans-serif}
 .hidden{display:none!important}
-
-/* Login */
-.login-screen{max-width:430px;margin:55px auto;padding:25px 20px}
-.login-card{background:#191d3b;border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:25px 20px;text-align:center;box-shadow:0 10px 30px #0005}
-.login-logo{font-size:48px;margin-bottom:12px}
-.login-card h1{color:#d7a5ff;font-size:27px;margin-bottom:10px}
-.login-card p{color:#b8b7ca;font-size:14px;line-height:1.6;margin-bottom:20px}
-.login-card input{width:100%;padding:14px;border-radius:12px;border:1px solid #51447b;background:#0d1027;color:white;font-size:17px;margin:10px 0;outline:none}
-.login-card input:focus{border-color:#d13df0}
-.main-btn{width:100%;padding:14px;border:0;border-radius:12px;background:linear-gradient(90deg,#7928ca,#d13df0);color:white;font-size:16px;font-weight:bold;margin-top:12px}
-.small-text{font-size:12px!important;color:#aaa9bf!important;margin-top:15px}
-#status{font-size:13px;color:#ffd98b;margin-top:14px;line-height:1.5}
-#recaptcha-container{display:flex;justify-content:center;margin:15px 0;overflow:hidden}
+button{cursor:pointer;border:0}
+.app{max-width:500px;margin:auto;min-height:100vh;background:linear-gradient(160deg,#17133b,#090d20);padding-bottom:90px}
+header{padding:18px;display:flex;align-items:center;justify-content:space-between;background:#21164b}
+.brand{font-size:23px;color:#e3baff;font-weight:bold}
+.profile{width:42px;height:42px;border-radius:50%;object-fit:cover}
+.login-screen{max-width:430px;margin:65px auto;padding:20px}
+.login-card{background:#191d3b;border:1px solid #51447b;border-radius:22px;padding:30px 20px;text-align:center}
+.login-card h1{color:#d7a5ff;margin:12px}
+.login-card p{color:#bbb;margin:15px 0}
+.google-btn{width:100%;padding:15px;border-radius:12px;background:white;color:#222;font-weight:bold;font-size:16px}
+#status{color:#ffd98b;margin-top:15px;font-size:13px}
+.welcome{padding:22px 18px}
+.welcome p{color:#aaa;margin-top:8px;font-size:14px}
+.banner{margin:0 15px;padding:22px;border-radius:18px;background:linear-gradient(120deg,#7928ca,#4022a8,#e04fff)}
+.banner p{font-size:13px;margin-top:8px}
+.room-head{padding:20px 15px 12px;display:flex;justify-content:space-between;align-items:center}
+.room-head small{color:#c5a8ff}
+.seat-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:10px 14px}
+.seat{min-width:0;min-height:115px;background:#191d3b;border:1px solid #40336d;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:9px 3px;position:relative}
+.avatar{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#7928ca,#e04fff);font-size:23px;overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.seat-name{font-size:12px;font-weight:bold;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.role{font-size:10px;color:#e4bdff}
+.mic{font-size:12px;color:#b8b7ca}
+.seat.me{border-color:#d7a5ff;background:#28204d}
+.seat.occupied{border-color:#7653b7}
+.controls{margin:20px 15px;padding:18px;background:#191d3b;border-radius:18px}
+.controls h3{text-align:center;margin-bottom:15px}
+.control-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.control-grid button{padding:13px 5px;border-radius:12px;background:#30245a;color:white;font-size:12px}
+.control-grid button.active{background:#9b39d6}
+.notice{margin:15px;padding:15px;background:#191d3b;border-radius:14px;color:#bbb;font-size:12px;line-height:1.7}
+.logout{width:100%;padding:12px;background:#49305f;color:white;border-radius:10px;margin-top:12px}
+nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:500px;background:#11152d;display:flex;justify-content:space-around;padding:13px 2px;border-top:1px solid #393052}
+nav button{background:none;color:#c6b4df;font-size:11px}
+nav span{display:block;font-size:20px;margin-bottom:4px}
+@media(max-width:350px){.seat-grid{gap:7px;padding:8px}.seat{min-height:105px}.avatar{width:42px;height:42px}}
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN SCREEN -->
+<!-- GMAIL LOGIN -->
 <div id="loginScreen" class="login-screen">
-  <div class="login-card">
-    <div class="login-logo">💜</div>
-    <h1>Zerin Chat</h1>
-    <p>বন্ধুদের সঙ্গে যুক্ত হতে আপনার মোবাইল নম্বর দিয়ে লগইন করুন।</p>
-
-    <div id="phoneSection">
-      <input id="phoneNumber" type="tel" placeholder="01XXXXXXXXX" maxlength="14">
-      <div id="recaptcha-container"></div>
-      <button class="main-btn" id="sendOtpBtn" onclick="sendOTP()">OTP পাঠান</button>
-    </div>
-
-    <div id="otpSection" class="hidden">
-      <p>আপনার মোবাইলে পাঠানো ৬ সংখ্যার OTP লিখুন।</p>
-      <input id="otpCode" type="text" inputmode="numeric" maxlength="6" placeholder="৬ সংখ্যার OTP">
-      <button class="main-btn" id="verifyBtn" onclick="verifyOTP()">লগইন করুন</button>
-      <button class="main-btn" style="background:#34304f" onclick="backToPhone()">ফিরে যান</button>
-    </div>
-
-    <div id="status"></div>
-    <p class="small-text">আপনার নম্বর Firebase-এর মাধ্যমে যাচাই করা হবে।</p>
-  </div>
+ <div class="login-card">
+  <div style="font-size:50px">💜</div>
+  <h1>Zerin Chat</h1>
+  <p>Gmail Account দিয়ে লগইন করে ভয়েস কমিউনিটিতে যোগ দিন।</p>
+  <button class="google-btn" id="googleLogin">🌐 Google দিয়ে লগইন করুন</button>
+  <div id="status"></div>
+ </div>
 </div>
 
 <!-- MAIN APP -->
 <div id="mainApp" class="app hidden">
+ <header>
+  <div class="brand">💜 Zerin Chat</div>
+  <img id="profilePhoto" class="profile" alt="Profile">
+ </header>
 
-  <header>
-    <div class="brand">💜 Zerin Chat</div>
-    <div class="profile">👤</div>
-  </header>
+ <section class="welcome">
+  <h2 id="welcomeName">স্বাগতম!</h2>
+  <p>আপনার বন্ধুদের সঙ্গে ভয়েস আড্ডায় যোগ দিন।</p>
+ </section>
 
-  <section class="welcome">
-    <h1>স্বাগতম Zerin Chat-এ!</h1>
-    <p>বন্ধুদের সঙ্গে যুক্ত থাকুন, আড্ডা দিন এবং আনন্দ ভাগ করে নিন।</p>
-  </section>
+ <section class="banner">
+  <h2>🎙️ Zerin Voice Club</h2>
+  <p>১৫টি মাইক্রোফোন সিটে বন্ধুদের সঙ্গে আড্ডা দিন।</p>
+ </section>
 
-  <section class="banner">
-    <h2>🎙️ Voice Club</h2>
-    <p>আপনার বন্ধুদের সঙ্গে ভয়েস আড্ডা ও কমিউনিটির আনন্দ উপভোগ করুন।</p>
-  </section>
+ <div class="room-head">
+  <h3>🎤 Live Voice Room</h3>
+  <small>১৫টি সিট</small>
+ </div>
 
-  <h2 class="section-title">✨ আমাদের ফিচার</h2>
+ <div id="seatGrid" class="seat-grid"></div>
 
-  <section class="rooms">
-    <div class="room">
-      <div class="emoji">🎤</div>
-      <h3>Voice Room</h3>
-      <p>ভয়েস আড্ডার জায়গা</p>
-      <button onclick="showMessage('Voice Room এখনো সার্ভারের সঙ্গে যুক্ত হয়নি।')">প্রবেশ করুন</button>
-    </div>
-
-    <div class="room">
-      <div class="emoji">💬</div>
-      <h3>Chat</h3>
-      <p>বন্ধুদের সঙ্গে কথা বলুন</p>
-      <button onclick="showMessage('Chat ফিচার এখনো চালু হয়নি।')">চ্যাট করুন</button>
-    </div>
-
-    <div class="room">
-      <div class="emoji">👑</div>
-      <h3>VIP Club</h3>
-      <p>বিশেষ সদস্যদের জন্য</p>
-      <button onclick="showMessage('VIP ফিচার এখনো চালু হয়নি।')">দেখুন</button>
-    </div>
-
-    <div class="room">
-      <div class="emoji">💰</div>
-      <h3>Wallet</h3>
-      <p>আপনার ওয়ালেট</p>
-      <button onclick="showMessage('Wallet এখনো কোনো পেমেন্ট সিস্টেমের সঙ্গে যুক্ত নয়।')">দেখুন</button>
-    </div>
-  </section>
-
-  <div class="notice">
-    💜 <strong>Zerin Chat Community</strong><br>
-    আমাদের সঙ্গে থাকুন এবং নতুন বন্ধু তৈরি করুন। নতুন ফিচার ধীরে ধীরে যুক্ত করা হবে।
-    <br><br>
-    <button class="main-btn" onclick="logout()">লগআউট</button>
+ <section class="controls">
+  <h3>🎛️ Room Controls</h3>
+  <div class="control-grid">
+   <button id="micBtn">🎤 মাইক চালু</button>
+   <button id="handBtn">✋ হাত তুলুন</button>
+   <button onclick="showMessage('গিফট সিস্টেম এখনো যুক্ত হয়নি।')">🎁 Gift</button>
+   <button onclick="showMessage('চ্যাট সিস্টেম এখনো যুক্ত হয়নি।')">💬 Chat</button>
+   <button onclick="showMessage('লাইভ ভয়েসের জন্য ভয়েস সার্ভার প্রয়োজন।')">🔊 Voice</button>
+   <button onclick="logout()">🚪 বের হন</button>
   </div>
+ </section>
 
-  <nav>
-    <a class="active" href="#home"><span>🏠</span>Home</a>
-    <a href="#rooms" onclick="showMessage('Room ফিচার এখনো চালু হয়নি।')"><span>🎙️</span>Rooms</a>
-    <a href="#chat" onclick="showMessage('Chat ফিচার এখনো চালু হয়নি।')"><span>💬</span>Chat</a>
-    <a href="#wallet" onclick="showMessage('Wallet ফিচার এখনো চালু হয়নি।')"><span>💰</span>Wallet</a>
-    <a href="#profile" onclick="showMessage('Profile ফিচার এখনো চালু হয়নি।')"><span>👤</span>Profile</a>
-  </nav>
+ <div class="notice">
+  💜 Zerin Chat Community<br>
+  ১৫টি সিটের রুম ডিজাইন প্রস্তুত। লাইভ ভয়েস, চ্যাট ও গিফট চালু করতে পরবর্তী সময়ে সার্ভার সংযুক্ত করতে হবে।
+  <button class="logout" onclick="logout()">লগআউট</button>
+ </div>
+
+ <nav>
+  <button onclick="window.scrollTo(0,0)"><span>🏠</span>Home</button>
+  <button onclick="document.querySelector('.seat-grid').scrollIntoView()"><span>🎙️</span>Rooms</button>
+  <button onclick="showMessage('Chat এখনো যুক্ত হয়নি।')"><span>💬</span>Chat</button>
+  <button onclick="showMessage('Wallet এখনো যুক্ত হয়নি।')"><span>💰</span>Wallet</button>
+  <button onclick="showMessage('Profile এখনো যুক্ত হয়নি।')"><span>👤</span>Profile</button>
+ </nav>
 </div>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 
 import {
-  getAuth,
-  RecaptchaVerifier,
-  signInWithPhoneNumber,
-  onAuthStateChanged,
-  signOut
+ getAuth,
+ GoogleAuthProvider,
+ signInWithRedirect,
+ getRedirectResult,
+ onAuthStateChanged,
+ signOut
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
-// Firebase Configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyDLYHBs_DU34A7so1brYQG81h6XDutzE0E",
-  authDomain: "zerin-chat.firebaseapp.com",
-  projectId: "zerin-chat",
-  storageBucket: "zerin-chat.firebasestorage.app",
-  messagingSenderId: "658132711603",
-  appId: "1:658132711603:web:9b739daf96454d382618c6",
-  measurementId: "G-7PXBG07PME"
+const firebaseConfig={
+ apiKey:"AIzaSyDLYHBs_DU34A7so1brYQG81h6XDutzE0E",
+ authDomain:"zerin-chat.firebaseapp.com",
+ projectId:"zerin-chat",
+ storageBucket:"zerin-chat.firebasestorage.app",
+ messagingSenderId:"658132711603",
+ appId:"1:658132711603:web:9b739daf96454d382618c6",
+ measurementId:"G-7PXBG07PME"
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const provider=new GoogleAuthProvider();
+provider.setCustomParameters({prompt:"select_account"});
 
-let confirmationResult = null;
-let recaptchaVerifier = null;
+const loginScreen=document.getElementById("loginScreen");
+const mainApp=document.getElementById("mainApp");
+const statusBox=document.getElementById("status");
 
-const loginScreen = document.getElementById("loginScreen");
-const mainApp = document.getElementById("mainApp");
-const phoneSection = document.getElementById("phoneSection");
-const otpSection = document.getElementById("otpSection");
-const statusBox = document.getElementById("status");
+document.getElementById("googleLogin").onclick=async()=>{
+ try{
+  statusBox.textContent="Google Login চালু হচ্ছে...";
+  await signInWithRedirect(auth,provider);
+ }catch(error){
+  statusBox.textContent="লগইন সমস্যা: "+error.message;
+ }
+};
 
-function showStatus(message) {
-  statusBox.textContent = message;
+try{
+ await getRedirectResult(auth);
+}catch(error){
+ statusBox.textContent="Google Login সমস্যা: "+error.message;
 }
 
-function normalizePhone(value) {
-  let phone = value.replace(/[\s-]/g, "");
+let currentUser=null;
+let micOn=false;
+let handRaised=false;
 
-  if (/^01[3-9]\d{8}$/.test(phone)) {
-    phone = "+88" + phone;
-  } else if (/^8801[3-9]\d{8}$/.test(phone)) {
-    phone = "+" + phone;
+function renderSeats(){
+ const grid=document.getElementById("seatGrid");
+ grid.innerHTML="";
+
+ const roles=["👑 Owner","🛡️ Admin","💜 Assistant"];
+
+ for(let i=0;i<15;i++){
+  const isMe=i===0 && currentUser;
+  const seat=document.createElement("div");
+  seat.className="seat"+(isMe?" me occupied":"");
+
+  const avatar=document.createElement("div");
+  avatar.className="avatar";
+
+  if(isMe && currentUser.photoURL){
+   const img=document.createElement("img");
+   img.src=currentUser.photoURL;
+   img.alt="Profile";
+   avatar.appendChild(img);
+  }else{
+   avatar.textContent=isMe?"👤":"🎤";
   }
 
-  if (!/^\+8801[3-9]\d{8}$/.test(phone)) {
-    throw new Error("সঠিক বাংলাদেশের মোবাইল নম্বর লিখুন। যেমন: 01XXXXXXXXX");
-  }
+  const name=document.createElement("div");
+  name.className="seat-name";
+  name.textContent=isMe?(currentUser.displayName||"আপনি"):"সিট "+(i+1);
 
-  return phone;
+  const role=document.createElement("div");
+  role.className="role";
+  role.textContent=i<3?roles[i]:"Member";
+
+  const mic=document.createElement("div");
+  mic.className="mic";
+  mic.textContent=isMe?(micOn?"🎤 Mic On":"🔇 Mic Off"):"🔇 খালি সিট";
+
+  seat.append(avatar,name,role,mic);
+  grid.appendChild(seat);
+ }
 }
 
-async function setupRecaptcha() {
-  if (recaptchaVerifier) {
-    recaptchaVerifier.clear();
-    recaptchaVerifier = null;
-  }
-
-  recaptchaVerifier = new RecaptchaVerifier(
-    auth,
-    "recaptcha-container",
-    {
-      size: "normal",
-      callback: () => {
-        showStatus("reCAPTCHA যাচাই সফল হয়েছে।");
-      },
-      "expired-callback": () => {
-        showStatus("reCAPTCHA-এর সময় শেষ হয়েছে। আবার যাচাই করুন।");
-      }
-    }
-  );
-
-  await recaptchaVerifier.render();
-}
-
-window.sendOTP = async function() {
-  const button = document.getElementById("sendOtpBtn");
-
-  try {
-    button.disabled = true;
-    showStatus("নম্বর যাচাই করা হচ্ছে...");
-
-    const phone = normalizePhone(
-      document.getElementById("phoneNumber").value
-    );
-
-    await setupRecaptcha();
-
-    showStatus("OTP পাঠানো হচ্ছে...");
-
-    confirmationResult = await signInWithPhoneNumber(
-      auth,
-      phone,
-      recaptchaVerifier
-    );
-
-    phoneSection.classList.add("hidden");
-    otpSection.classList.remove("hidden");
-    showStatus("আপনার নম্বরে OTP পাঠানো হয়েছে।");
-
-  } catch (error) {
-    console.error(error);
-    showStatus(error.message || "OTP পাঠানো যায়নি। আবার চেষ্টা করুন।");
-
-    if (recaptchaVerifier) {
-      recaptchaVerifier.clear();
-      recaptchaVerifier = null;
-    }
-  } finally {
-    button.disabled = false;
-  }
-};
-
-window.verifyOTP = async function() {
-  const code = document.getElementById("otpCode").value.trim();
-  const button = document.getElementById("verifyBtn");
-
-  if (!/^\d{6}$/.test(code)) {
-    showStatus("সঠিক ৬ সংখ্যার OTP লিখুন।");
-    return;
-  }
-
-  try {
-    button.disabled = true;
-    showStatus("OTP যাচাই হচ্ছে...");
-
-    await confirmationResult.confirm(code);
-
-    showStatus("লগইন সফল হয়েছে!");
-
-  } catch (error) {
-    console.error(error);
-    showStatus("OTP ভুল অথবা মেয়াদ শেষ। আবার চেষ্টা করুন।");
-  } finally {
-    button.disabled = false;
-  }
-};
-
-window.backToPhone = function() {
-  otpSection.classList.add("hidden");
-  phoneSection.classList.remove("hidden");
-  document.getElementById("otpCode").value = "";
-  confirmationResult = null;
-  showStatus("আপনার নম্বর আবার লিখুন।");
-
-  if (recaptchaVerifier) {
-    recaptchaVerifier.clear();
-    recaptchaVerifier = null;
-  }
-};
-
-window.logout = async function() {
-  try {
-    await signOut(auth);
-  } catch (error) {
-    showStatus("লগআউট করা যায়নি।");
-  }
-};
-
-window.showMessage = function(message) {
-  alert(message);
-};
-
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    loginScreen.classList.add("hidden");
-    mainApp.classList.remove("hidden");
-  } else {
-    mainApp.classList.add("hidden");
-    loginScreen.classList.remove("hidden");
-  }
+onAuthStateChanged(auth,user=>{
+ currentUser=user;
+ if(user){
+  loginScreen.classList.add("hidden");
+  mainApp.classList.remove("hidden");
+  document.getElementById("welcomeName").textContent=
+   "স্বাগতম, "+(user.displayName||"বন্ধু")+"!";
+  document.getElementById("profilePhoto").src=
+   user.photoURL||"https://www.gravatar.com/avatar/?d=mp";
+  renderSeats();
+ }else{
+  mainApp.classList.add("hidden");
+  loginScreen.classList.remove("hidden");
+ }
 });
 
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("/voice-club-bd/sw.js")
-      .catch(error => console.error("Service Worker Error:", error));
-  });
+document.getElementById("micBtn").onclick=()=>{
+ micOn=!micOn;
+ document.getElementById("micBtn").textContent=
+  micOn?"🔇 মাইক বন্ধ":"🎤 মাইক চালু";
+ document.getElementById("micBtn").classList.toggle("active",micOn);
+ renderSeats();
+};
+
+document.getElementById("handBtn").onclick=()=>{
+ handRaised=!handRaised;
+ document.getElementById("handBtn").textContent=
+  handRaised?"✋ হাত নামান":"✋ হাত তুলুন";
+ document.getElementById("handBtn").classList.toggle("active",handRaised);
+};
+
+window.logout=async()=>{
+ try{await signOut(auth)}
+ catch(error){alert(error.message)}
+};
+
+window.showMessage=message=>alert(message);
+
+if("serviceWorker" in navigator){
+ window.addEventListener("load",()=>{
+  navigator.serviceWorker.register("/voice-club-bd/sw.js")
+   .catch(console.error);
+ });
 }
 </script>
 
