@@ -1,10 +1,12 @@
+
 <!DOCTYPE html>
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zerin Chat</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <meta name="theme-color" content="#7928CA">
+<meta name="description" content="Zerin Chat - Voice Chat, Live Room and Community">
+<title>Zerin Chat</title>
 <link rel="manifest" href="/voice-club-bd/manifest.json">
 
 <style>
@@ -12,16 +14,17 @@
 body{background:#090d20;color:white;font-family:Arial,sans-serif}
 .hidden{display:none!important}
 button{cursor:pointer;border:0}
-.app{max-width:500px;margin:auto;min-height:100vh;background:linear-gradient(160deg,#17133b,#090d20);padding-bottom:90px}
-header{padding:18px;display:flex;align-items:center;justify-content:space-between;background:#21164b}
+button:disabled{opacity:.6;cursor:wait}
+.app{max-width:500px;margin:auto;min-height:100vh;background:linear-gradient(160deg,#17133b,#090d20);padding-bottom:85px}
+header{padding:17px;display:flex;align-items:center;justify-content:space-between;background:#21164b}
 .brand{font-size:23px;color:#e3baff;font-weight:bold}
-.profile{width:42px;height:42px;border-radius:50%;object-fit:cover}
+.profile{width:43px;height:43px;border-radius:50%;object-fit:cover;background:#39265d}
 .login-screen{max-width:430px;margin:65px auto;padding:20px}
 .login-card{background:#191d3b;border:1px solid #51447b;border-radius:22px;padding:30px 20px;text-align:center}
 .login-card h1{color:#d7a5ff;margin:12px}
-.login-card p{color:#bbb;margin:15px 0}
+.login-card p{color:#bbb;margin:15px 0;line-height:1.6}
 .google-btn{width:100%;padding:15px;border-radius:12px;background:white;color:#222;font-weight:bold;font-size:16px}
-#status{color:#ffd98b;margin-top:15px;font-size:13px}
+#status{color:#ffd98b;margin-top:15px;font-size:13px;line-height:1.6;overflow-wrap:anywhere}
 .welcome{padding:22px 18px}
 .welcome p{color:#aaa;margin-top:8px;font-size:14px}
 .banner{margin:0 15px;padding:22px;border-radius:18px;background:linear-gradient(120deg,#7928ca,#4022a8,#e04fff)}
@@ -30,13 +33,12 @@ header{padding:18px;display:flex;align-items:center;justify-content:space-betwee
 .room-head small{color:#c5a8ff}
 .seat-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:10px 14px}
 .seat{min-width:0;min-height:115px;background:#191d3b;border:1px solid #40336d;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:9px 3px;position:relative}
+.seat.me{border-color:#d7a5ff;background:#28204d}
 .avatar{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#7928ca,#e04fff);font-size:23px;overflow:hidden}
 .avatar img{width:100%;height:100%;object-fit:cover}
 .seat-name{font-size:12px;font-weight:bold;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .role{font-size:10px;color:#e4bdff}
-.mic{font-size:12px;color:#b8b7ca}
-.seat.me{border-color:#d7a5ff;background:#28204d}
-.seat.occupied{border-color:#7653b7}
+.mic{font-size:11px;color:#b8b7ca;text-align:center}
 .controls{margin:20px 15px;padding:18px;background:#191d3b;border-radius:18px}
 .controls h3{text-align:center;margin-bottom:15px}
 .control-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
@@ -44,28 +46,33 @@ header{padding:18px;display:flex;align-items:center;justify-content:space-betwee
 .control-grid button.active{background:#9b39d6}
 .notice{margin:15px;padding:15px;background:#191d3b;border-radius:14px;color:#bbb;font-size:12px;line-height:1.7}
 .logout{width:100%;padding:12px;background:#49305f;color:white;border-radius:10px;margin-top:12px}
-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:500px;background:#11152d;display:flex;justify-content:space-around;padding:13px 2px;border-top:1px solid #393052}
+nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:500px;background:#11152d;display:flex;justify-content:space-around;padding:12px 2px;border-top:1px solid #393052;z-index:10}
 nav button{background:none;color:#c6b4df;font-size:11px}
 nav span{display:block;font-size:20px;margin-bottom:4px}
-@media(max-width:350px){.seat-grid{gap:7px;padding:8px}.seat{min-height:105px}.avatar{width:42px;height:42px}}
+@media(max-width:350px){
+ .seat-grid{gap:7px;padding:8px}
+ .seat{min-height:105px}
+ .avatar{width:42px;height:42px}
+}
 </style>
 </head>
 
 <body>
 
-<!-- GMAIL LOGIN -->
+<!-- LOGIN SCREEN -->
 <div id="loginScreen" class="login-screen">
  <div class="login-card">
   <div style="font-size:50px">💜</div>
   <h1>Zerin Chat</h1>
-  <p>Gmail Account দিয়ে লগইন করে ভয়েস কমিউনিটিতে যোগ দিন।</p>
+  <p>আপনার Gmail Account দিয়ে লগইন করে ভয়েস কমিউনিটিতে যোগ দিন।</p>
   <button class="google-btn" id="googleLogin">🌐 Google দিয়ে লগইন করুন</button>
-  <div id="status"></div>
+  <div id="status">লগইন করার জন্য Google বাটনে চাপ দিন।</div>
  </div>
 </div>
 
 <!-- MAIN APP -->
 <div id="mainApp" class="app hidden">
+
  <header>
   <div class="brand">💜 Zerin Chat</div>
   <img id="profilePhoto" class="profile" alt="Profile">
@@ -73,12 +80,12 @@ nav span{display:block;font-size:20px;margin-bottom:4px}
 
  <section class="welcome">
   <h2 id="welcomeName">স্বাগতম!</h2>
-  <p>আপনার বন্ধুদের সঙ্গে ভয়েস আড্ডায় যোগ দিন।</p>
+  <p>আপনার বন্ধুদের সঙ্গে আড্ডায় যোগ দিন।</p>
  </section>
 
  <section class="banner">
   <h2>🎙️ Zerin Voice Club</h2>
-  <p>১৫টি মাইক্রোফোন সিটে বন্ধুদের সঙ্গে আড্ডা দিন।</p>
+  <p>১৫টি মাইক্রোফোন সিটের রুমে স্বাগতম।</p>
  </section>
 
  <div class="room-head">
@@ -90,163 +97,330 @@ nav span{display:block;font-size:20px;margin-bottom:4px}
 
  <section class="controls">
   <h3>🎛️ Room Controls</h3>
+
   <div class="control-grid">
    <button id="micBtn">🎤 মাইক চালু</button>
    <button id="handBtn">✋ হাত তুলুন</button>
-   <button onclick="showMessage('গিফট সিস্টেম এখনো যুক্ত হয়নি।')">🎁 Gift</button>
-   <button onclick="showMessage('চ্যাট সিস্টেম এখনো যুক্ত হয়নি।')">💬 Chat</button>
-   <button onclick="showMessage('লাইভ ভয়েসের জন্য ভয়েস সার্ভার প্রয়োজন।')">🔊 Voice</button>
-   <button onclick="logout()">🚪 বের হন</button>
+   <button id="giftBtn">🎁 Gift</button>
+   <button id="chatBtn">💬 Chat</button>
+   <button id="voiceBtn">🔊 Voice</button>
+   <button id="logoutBtn">🚪 বের হন</button>
   </div>
  </section>
 
  <div class="notice">
   💜 Zerin Chat Community<br>
-  ১৫টি সিটের রুম ডিজাইন প্রস্তুত। লাইভ ভয়েস, চ্যাট ও গিফট চালু করতে পরবর্তী সময়ে সার্ভার সংযুক্ত করতে হবে।
-  <button class="logout" onclick="logout()">লগআউট</button>
+  আপনার অ্যাকাউন্ট দিয়ে লগইন করা হয়েছে। লাইভ ভয়েস, চ্যাট ও গিফট চালু করতে পরবর্তী সময়ে সার্ভার সংযুক্ত করতে হবে।
+  <button class="logout" id="logoutBtn2">লগআউট</button>
  </div>
 
  <nav>
-  <button onclick="window.scrollTo(0,0)"><span>🏠</span>Home</button>
-  <button onclick="document.querySelector('.seat-grid').scrollIntoView()"><span>🎙️</span>Rooms</button>
-  <button onclick="showMessage('Chat এখনো যুক্ত হয়নি।')"><span>💬</span>Chat</button>
-  <button onclick="showMessage('Wallet এখনো যুক্ত হয়নি।')"><span>💰</span>Wallet</button>
-  <button onclick="showMessage('Profile এখনো যুক্ত হয়নি।')"><span>👤</span>Profile</button>
+  <button id="homeNav"><span>🏠</span>Home</button>
+  <button id="roomsNav"><span>🎙️</span>Rooms</button>
+  <button id="chatNav"><span>💬</span>Chat</button>
+  <button id="walletNav"><span>💰</span>Wallet</button>
+  <button id="profileNav"><span>👤</span>Profile</button>
  </nav>
+
 </div>
 
 <script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 
 import {
  getAuth,
  GoogleAuthProvider,
+ signInWithPopup,
  signInWithRedirect,
  getRedirectResult,
+ setPersistence,
+ browserLocalPersistence,
  onAuthStateChanged,
  signOut
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
-const firebaseConfig={
- apiKey:"AIzaSyDLYHBs_DU34A7so1brYQG81h6XDutzE0E",
- authDomain:"zerin-chat.firebaseapp.com",
- projectId:"zerin-chat",
- storageBucket:"zerin-chat.firebasestorage.app",
- messagingSenderId:"658132711603",
- appId:"1:658132711603:web:9b739daf96454d382618c6",
- measurementId:"G-7PXBG07PME"
+/* FIREBASE CONFIG */
+const firebaseConfig = {
+ apiKey: "AIzaSyDLYHBs_DU34A7so1brYQG81h6XDutzE0E",
+ authDomain: "zerin-chat.firebaseapp.com",
+ projectId: "zerin-chat",
+ storageBucket: "zerin-chat.firebasestorage.app",
+ messagingSenderId: "658132711603",
+ appId: "1:658132711603:web:9b739daf96454d382618c6",
+ measurementId: "G-7PXBG07PME"
 };
 
-const app=initializeApp(firebaseConfig);
-const auth=getAuth(app);
-const provider=new GoogleAuthProvider();
-provider.setCustomParameters({prompt:"select_account"});
+/* INITIALIZE FIREBASE */
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 
-const loginScreen=document.getElementById("loginScreen");
-const mainApp=document.getElementById("mainApp");
-const statusBox=document.getElementById("status");
+auth.languageCode = "bn";
+provider.setCustomParameters({
+ prompt: "select_account"
+});
 
-document.getElementById("googleLogin").onclick=async()=>{
- try{
-  statusBox.textContent="Google Login চালু হচ্ছে...";
-  await signInWithRedirect(auth,provider);
- }catch(error){
-  statusBox.textContent="লগইন সমস্যা: "+error.message;
- }
-};
+const loginScreen = document.getElementById("loginScreen");
+const mainApp = document.getElementById("mainApp");
+const statusBox = document.getElementById("status");
+const googleButton = document.getElementById("googleLogin");
 
-try{
- await getRedirectResult(auth);
-}catch(error){
- statusBox.textContent="Google Login সমস্যা: "+error.message;
+let currentUser = null;
+let micOn = false;
+let handRaised = false;
+let micStream = null;
+
+/* ERROR MESSAGE */
+function errorMessage(error) {
+ const messages = {
+  "auth/unauthorized-domain":
+   "Firebase-এ এই ওয়েবসাইটের Domain অনুমোদন করতে হবে।",
+  "auth/popup-blocked":
+   "ব্রাউজার Popup বন্ধ করেছে। আবার চেষ্টা করুন।",
+  "auth/popup-closed-by-user":
+   "লগইন সম্পূর্ণ হওয়ার আগে Popup বন্ধ হয়েছে।",
+  "auth/network-request-failed":
+   "ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।",
+  "auth/operation-not-allowed":
+   "Firebase Authentication-এ Google Provider চালু করুন।",
+  "auth/cancelled-popup-request":
+   "লগইন প্রক্রিয়া বাতিল হয়েছে। আবার চেষ্টা করুন।"
+ };
+
+ return messages[error.code] || error.message || "অজানা সমস্যা হয়েছে।";
 }
 
-let currentUser=null;
-let micOn=false;
-let handRaised=false;
+/* SHOW MAIN APP */
+function showApp(user) {
+ currentUser = user;
 
-function renderSeats(){
- const grid=document.getElementById("seatGrid");
- grid.innerHTML="";
+ loginScreen.classList.add("hidden");
+ mainApp.classList.remove("hidden");
 
- const roles=["👑 Owner","🛡️ Admin","💜 Assistant"];
+ document.getElementById("welcomeName").textContent =
+  "স্বাগতম, " + (user.displayName || "বন্ধু") + "!";
 
- for(let i=0;i<15;i++){
-  const isMe=i===0 && currentUser;
-  const seat=document.createElement("div");
-  seat.className="seat"+(isMe?" me occupied":"");
+ const photo = document.getElementById("profilePhoto");
+ photo.src = user.photoURL || "https://www.gravatar.com/avatar/?d=mp";
 
-  const avatar=document.createElement("div");
-  avatar.className="avatar";
+ photo.onerror = () => {
+  photo.src = "https://www.gravatar.com/avatar/?d=mp";
+ };
 
-  if(isMe && currentUser.photoURL){
-   const img=document.createElement("img");
-   img.src=currentUser.photoURL;
-   img.alt="Profile";
+ renderSeats();
+}
+
+/* RENDER 15 SEATS */
+function renderSeats() {
+ const grid = document.getElementById("seatGrid");
+ grid.innerHTML = "";
+
+ for (let i = 0; i < 15; i++) {
+  const isMe = i === 0 && currentUser;
+
+  const seat = document.createElement("div");
+  seat.className = "seat" + (isMe ? " me" : "");
+
+  const avatar = document.createElement("div");
+  avatar.className = "avatar";
+
+  if (isMe && currentUser.photoURL) {
+   const img = document.createElement("img");
+   img.src = currentUser.photoURL;
+   img.alt = "Profile";
    avatar.appendChild(img);
-  }else{
-   avatar.textContent=isMe?"👤":"🎤";
+  } else {
+   avatar.textContent = isMe ? "👤" : "🎤";
   }
 
-  const name=document.createElement("div");
-  name.className="seat-name";
-  name.textContent=isMe?(currentUser.displayName||"আপনি"):"সিট "+(i+1);
+  const name = document.createElement("div");
+  name.className = "seat-name";
+  name.textContent = isMe
+   ? (currentUser.displayName || "আপনি")
+   : "খালি সিট " + (i + 1);
 
-  const role=document.createElement("div");
-  role.className="role";
-  role.textContent=i<3?roles[i]:"Member";
+  const role = document.createElement("div");
+  role.className = "role";
+  role.textContent = isMe ? "💜 Member" : "খালি";
 
-  const mic=document.createElement("div");
-  mic.className="mic";
-  mic.textContent=isMe?(micOn?"🎤 Mic On":"🔇 Mic Off"):"🔇 খালি সিট";
+  const mic = document.createElement("div");
+  mic.className = "mic";
+  mic.textContent = isMe
+   ? (micOn ? "🎤 Mic On" : "🔇 Mic Off")
+   : "খালি সিট";
 
-  seat.append(avatar,name,role,mic);
+  seat.append(avatar, name, role, mic);
   grid.appendChild(seat);
  }
 }
 
-onAuthStateChanged(auth,user=>{
- currentUser=user;
- if(user){
-  loginScreen.classList.add("hidden");
-  mainApp.classList.remove("hidden");
-  document.getElementById("welcomeName").textContent=
-   "স্বাগতম, "+(user.displayName||"বন্ধু")+"!";
-  document.getElementById("profilePhoto").src=
-   user.photoURL||"https://www.gravatar.com/avatar/?d=mp";
-  renderSeats();
- }else{
+/* LOGIN BUTTON */
+googleButton.addEventListener("click", async () => {
+ try {
+  googleButton.disabled = true;
+  statusBox.textContent = "Google Login হচ্ছে...";
+
+  await signInWithPopup(auth, provider);
+
+ } catch (error) {
+  console.error("Google Login Error:", error);
+
+  if (error.code === "auth/popup-blocked") {
+   try {
+    statusBox.textContent = "Google Login চালু হচ্ছে...";
+    await signInWithRedirect(auth, provider);
+    return;
+   } catch (redirectError) {
+    statusBox.textContent = errorMessage(redirectError);
+   }
+  } else {
+   statusBox.textContent = errorMessage(error);
+  }
+
+  googleButton.disabled = false;
+ }
+});
+
+/* CHECK REDIRECT LOGIN RESULT */
+try {
+ await getRedirectResult(auth);
+} catch (error) {
+ console.error("Redirect Error:", error);
+ statusBox.textContent = errorMessage(error);
+}
+
+/* AUTH PERSISTENCE */
+try {
+ await setPersistence(auth, browserLocalPersistence);
+} catch (error) {
+ console.error("Persistence Error:", error);
+ statusBox.textContent = errorMessage(error);
+}
+
+/* AUTOMATIC LOGIN CHECK */
+onAuthStateChanged(auth, (user) => {
+ if (user) {
+  showApp(user);
+  statusBox.textContent = "";
+  googleButton.disabled = false;
+ } else {
+  currentUser = null;
   mainApp.classList.add("hidden");
   loginScreen.classList.remove("hidden");
  }
 });
 
-document.getElementById("micBtn").onclick=()=>{
- micOn=!micOn;
- document.getElementById("micBtn").textContent=
-  micOn?"🔇 মাইক বন্ধ":"🎤 মাইক চালু";
- document.getElementById("micBtn").classList.toggle("active",micOn);
- renderSeats();
-};
+/* MICROPHONE PERMISSION */
+document.getElementById("micBtn").addEventListener("click", async () => {
+ const button = document.getElementById("micBtn");
 
-document.getElementById("handBtn").onclick=()=>{
- handRaised=!handRaised;
- document.getElementById("handBtn").textContent=
-  handRaised?"✋ হাত নামান":"✋ হাত তুলুন";
- document.getElementById("handBtn").classList.toggle("active",handRaised);
-};
+ if (micOn) {
+  if (micStream) {
+   micStream.getTracks().forEach(track => track.stop());
+   micStream = null;
+  }
 
-window.logout=async()=>{
- try{await signOut(auth)}
- catch(error){alert(error.message)}
-};
+  micOn = false;
+  button.textContent = "🎤 মাইক চালু";
+  button.classList.remove("active");
+  renderSeats();
+  return;
+ }
 
-window.showMessage=message=>alert(message);
+ try {
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+   alert("এই ব্রাউজারে মাইক্রোফোন ব্যবহার করা যাচ্ছে না। HTTPS সংযোগ পরীক্ষা করুন।");
+   return;
+  }
 
-if("serviceWorker" in navigator){
- window.addEventListener("load",()=>{
-  navigator.serviceWorker.register("/voice-club-bd/sw.js")
-   .catch(console.error);
+  micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+  micOn = true;
+  button.textContent = "🔇 মাইক বন্ধ";
+  button.classList.add("active");
+  renderSeats();
+
+  alert("মাইক্রোফোন চালু হয়েছে। এটি এখন শুধু আপনার ডিভাইসে কাজ করছে; লাইভ সম্প্রচারের জন্য ভয়েস সার্ভার প্রয়োজন।");
+
+ } catch (error) {
+  console.error(error);
+  alert("মাইক্রোফোন চালু হয়নি। ফোনের Microphone Permission অনুমতি দিন।");
+ }
+});
+
+/* HAND RAISE */
+document.getElementById("handBtn").addEventListener("click", () => {
+ handRaised = !handRaised;
+
+ const button = document.getElementById("handBtn");
+ button.textContent = handRaised ? "✋ হাত নামান" : "✋ হাত তুলুন";
+ button.classList.toggle("active", handRaised);
+});
+
+/* PLACEHOLDER BUTTONS */
+function showMessage(message) {
+ alert(message);
+}
+
+document.getElementById("giftBtn").onclick = () =>
+ showMessage("🎁 Gift System চালু করতে Backend ও Database প্রয়োজন।");
+
+document.getElementById("chatBtn").onclick = () =>
+ showMessage("💬 Chat System এখনো সংযুক্ত করা হয়নি।");
+
+document.getElementById("voiceBtn").onclick = () =>
+ showMessage("🔊 Live Voice চালু করতে Voice Server প্রয়োজন।");
+
+document.getElementById("chatNav").onclick = () =>
+ showMessage("💬 Chat System এখনো সংযুক্ত করা হয়নি।");
+
+document.getElementById("walletNav").onclick = () =>
+ showMessage("💰 Wallet System এখনো সংযুক্ত করা হয়নি।");
+
+document.getElementById("profileNav").onclick = () =>
+ showMessage("👤 Profile System এখনো সংযুক্ত করা হয়নি।");
+
+/* NAVIGATION */
+document.getElementById("homeNav").onclick = () =>
+ window.scrollTo({ top: 0, behavior: "smooth" });
+
+document.getElementById("roomsNav").onclick = () =>
+ document.getElementById("seatGrid").scrollIntoView({ behavior: "smooth" });
+
+/* LOGOUT */
+async function logout() {
+ try {
+  if (micStream) {
+   micStream.getTracks().forEach(track => track.stop());
+   micStream = null;
+  }
+
+  micOn = false;
+  handRaised = false;
+
+  await signOut(auth);
+
+ } catch (error) {
+  alert("Logout সমস্যা: " + errorMessage(error));
+ }
+}
+
+document.getElementById("logoutBtn").onclick = logout;
+document.getElementById("logoutBtn2").onclick = logout;
+
+/* SERVICE WORKER */
+if ("serviceWorker" in navigator) {
+ window.addEventListener("load", async () => {
+  try {
+   const registration = await navigator.serviceWorker.register(
+    "/voice-club-bd/sw.js",
+    { updateViaCache: "none" }
+   );
+
+   registration.update().catch(console.error);
+  } catch (error) {
+   console.error("Service Worker Error:", error);
+  }
  });
 }
 </script>
